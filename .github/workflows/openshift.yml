@@ -1,7 +1,7 @@
 name: OpenShift 
 
 env: 
-  IMAGE_REGISTRY: ghcr.io/eulodos
+  IMAGE_REGISTRY: ghcr.io/${{ github.repository_owner }}
   REGISTRY_USER: ${{ github.actor }}
   REGISTRY_PASSWORD: ${{ github.token }}
   APP_NAME: nationalparks
@@ -42,6 +42,10 @@ jobs:
         builder_image: 'registry.access.redhat.com/ubi8/openjdk-11'
         image: ${{ env.APP_NAME }}
         tags: ${{ env.IMAGE_TAGS }}
+        
+    - id: make-docker-registry-lowercased
+      name: Make Docker Registry Lowercased
+      run: echo ::set-env name=IMAGE_REPOSITORY::$(echo ghcr.io/${{ github.repository }} | tr '[:upper:]' '[:lower:]')
 
     # https://github.com/redhat-actions/push-to-registry#readme
     - name: Push to Registry 
@@ -50,7 +54,7 @@ jobs:
       with:
         image: ${{ steps.build_image.outputs.image }}
         tags: ${{ steps.build_image.outputs.tags }}
-        registry: ${{ env.IMAGE_REGISTRY }}
+        registry: ${{ env.IMAGE_REPOSITORY }}
         username: ${{ env.REGISTRY_USER }}
         password: ${{ env.REGISTRY_PASSWORD }}
 
