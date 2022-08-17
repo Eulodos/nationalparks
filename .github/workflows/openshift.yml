@@ -46,7 +46,7 @@ jobs:
     - name: PrepareReg Names
       id: prepare_reg_names
       run: |
-        echo IMAGE_REPOSITORY=ghcr.io/$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]') >> $GITHUB_ENV
+        echo IMAGE_REPOSITORY=ghcr.io/$(echo ${{ github.repository_owner }} | tr '[:upper:]' '[:lower:]') >> $GITHUB_ENV
 
     # https://github.com/redhat-actions/push-to-registry#readme
     - name: Push to Registry 
