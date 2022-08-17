@@ -43,9 +43,10 @@ jobs:
         image: ${{ env.APP_NAME }}
         tags: ${{ env.IMAGE_TAGS }}
         
-    - id: make-docker-registry-lowercased
-      name: Make Docker Registry Lowercased
-      run: echo ::set-env name=IMAGE_REPOSITORY::$(echo ghcr.io/${{ github.repository }} | tr '[:upper:]' '[:lower:]')
+    - name: PrepareReg Names
+      id: prepare_reg_names
+      run: |
+        echo IMAGE_REPOSITORY=$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]') >> $GITHUB_ENV
 
     # https://github.com/redhat-actions/push-to-registry#readme
     - name: Push to Registry 
