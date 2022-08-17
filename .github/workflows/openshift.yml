@@ -9,8 +9,8 @@ env:
 
   OPENSHIFT_SERVER: ${{ secrets.OPENSHIFT_SERVER }}
   OPENSHIFT_TOKEN: ${{ secrets.OPENSHIFT_TOKEN }}
-  OPENSHIFT_NAMESPACE: "eulodos-dev"
-
+  OPENSHIFT_NAMESPACE: "%PROJECT%"
+  
   APP_PORT: "8080"
 
 on:
