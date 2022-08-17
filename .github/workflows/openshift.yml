@@ -1,7 +1,7 @@
 name: OpenShift 
 
 env: 
-  IMAGE_REGISTRY: ghcr.io/${{ github.repository_owner }}
+  IMAGE_REGISTRY: ghcr.io/${{ github.repository_owner.lowercase }}
   REGISTRY_USER: ${{ github.actor }}
   REGISTRY_PASSWORD: ${{ github.token }}
   APP_NAME: nationalparks
@@ -9,8 +9,8 @@ env:
 
   OPENSHIFT_SERVER: ${{ secrets.OPENSHIFT_SERVER }}
   OPENSHIFT_TOKEN: ${{ secrets.OPENSHIFT_TOKEN }}
-  OPENSHIFT_NAMESPACE: "%PROJECT%"
-  
+  OPENSHIFT_NAMESPACE: "eulodos-dev"
+
   APP_PORT: "8080"
 
 on:
@@ -48,7 +48,7 @@ jobs:
       id: push-to-registry
       uses: redhat-actions/push-to-registry@v2
       with:
-        image: ${{ steps.build_image.outputs.image }}
+        image: ${{ steps.build_image.outputs.image.lowercase }}
         tags: ${{ steps.build_image.outputs.tags }}
         registry: ${{ env.IMAGE_REGISTRY }}
         username: ${{ env.REGISTRY_USER }}
